@@ -1,38 +1,137 @@
-.App {
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
+
+:root {
+  --color-blue: rgb(22, 125, 221);
+  --color-blue: rgb(22, 125, 221);
+  --color-blue: rgb(22, 125, 221);
+  --color-background: rgb(123, 21, 182);
+  --color-dark: rgb(0, 1, 2);
+  --color-light: rgb(231, 224, 224);
+  --color-icon: rgb(250, 216, 21);
+  /* --color-icon: rgb(241, 205, 3); */
+  --color-focus: rgb(237, 240, 237);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+.content {
+  height: 100vh;
+  background-image: linear-gradient(
+    190deg,
+    var(--color-background),
+    var(--color-light)
+  );
+}
+
+/* can be used for dark theme in the future */
+.dark {
+  /* background-image: linear-gradient(
+    280deg,
+    var(--color-dark),
+    var(--color-light)
+  ); */
+}
+nav {
+  display: flex;
+  justify-content: center;
+}
+nav input {
+  width: 50%;
+  height: 3rem;
+  border-radius: 0rem 0rem 2rem 2rem;
+  outline: none;
+  padding-left: 1rem;
+  border: none;
+}
+nav input:focus {
+  background-color: var(--color-focus);
+}
+
+main {
+  color: var(--color-light);
+}
+
+/* Highlights section */
+
+main .highlights-section {
+  width: 30%;
+  text-align: center;
+  margin: 4rem auto;
+  /* background-color: black; */
+}
+article {
+  letter-spacing: 0.7px;
+}
+
+article.city-time {
+  margin-bottom: 1.5rem;
+}
+
+article.temperature h1 {
+  font-size: 2.5rem;
+  padding: 1rem;
+}
+
+article.temperature h5 {
+  margin-bottom: 0.5rem;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+/* icons */
+.icon {
+  color: var(--color-icon);
+  font-size: 1.2rem;
+  margin: 0.3rem;
+}
+
+.climate-icon,
+.hour-icon {
+  font-size: 2rem;
+}
+
+/* Hourly section */
+main .hourly-section {
+  width: 90%;
+  margin: 0 auto;
+}
+
+@media screen and (min-width: 1400px) {
+  main .hourly-section {
+    width: 50%;
+  }
+}
+
+.hourly-section .heading {
+  letter-spacing: 1.2px;
+}
+
+.hourly-container {
+  background-color: rgba(141, 137, 137, 0.151);
+  letter-spacing: 0.4px;
+  display: flex;
+  justify-content: center;
+  margin-top: 1.4rem;
+}
+.hourly-container .hour {
+  margin: 2rem;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.hour h5 {
+  margin-top: 0.6rem;
+  letter-spacing: 1px;
 }
