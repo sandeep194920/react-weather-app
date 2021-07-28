@@ -23,7 +23,6 @@ const capitalizeUtility = (str) => {
 // divide on Dates gets all the data and makes separate array of 
 // objects having same date 
 const divideOnDatesUtility = (data) => {
-    console.log(data)
     const dailyDataList = data
 
     // dividing all data into 7 days 
@@ -42,8 +41,6 @@ const divideOnDatesUtility = (data) => {
             dailyData[dailyData.length - 1].push(eachHour)
         }
     })
-    console.log('Daily data is now')
-    console.log(dailyData)
     return dailyData
 }
 // minTemp and maxTemp utilities return objects having 
