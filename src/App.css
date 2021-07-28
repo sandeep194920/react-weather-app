@@ -10,6 +10,8 @@
   --color-icon: rgb(250, 216, 21);
   /* --color-icon: rgb(241, 205, 3); */
   --color-focus: rgb(237, 240, 237);
+  --color-bg-light: rgba(141, 137, 137, 0.151);
+  --color-bg-light2: rgba(141, 137, 137, 0.24);
 }
 
 * {
@@ -25,7 +27,7 @@ body {
 .content {
   height: 100vh;
   background-image: linear-gradient(
-    190deg,
+    175deg,
     var(--color-background),
     var(--color-light)
   );
@@ -33,11 +35,7 @@ body {
 
 /* can be used for dark theme in the future */
 .dark {
-  /* background-image: linear-gradient(
-    280deg,
-    var(--color-dark),
-    var(--color-light)
-  ); */
+  background-image: linear-gradient(180deg, var(--color-dark), grey);
 }
 nav {
   display: flex;
@@ -61,11 +59,10 @@ main {
 
 /* Highlights section */
 
-main .highlights-section {
+.highlights-section {
   width: 30%;
   text-align: center;
   margin: 4rem auto;
-  /* background-color: black; */
 }
 article {
   letter-spacing: 0.7px;
@@ -91,6 +88,13 @@ article.temperature h5 {
   margin: 1rem 0;
 }
 
+.temp-container {
+  background-color: var(--color-bg-light2);
+  width: fit-content;
+  padding: 0.4rem;
+  margin: 0 auto 1rem auto;
+}
+
 /* icons */
 .icon {
   color: var(--color-icon);
@@ -104,7 +108,7 @@ article.temperature h5 {
 }
 
 /* Hourly section */
-main .hourly-section {
+.hourly-section {
   width: 90%;
   margin: 0 auto;
 }
@@ -120,8 +124,8 @@ main .hourly-section {
 }
 
 .hourly-container {
-  background-color: rgba(141, 137, 137, 0.151);
-  letter-spacing: 0.4px;
+  background-color: var(--color-bg-light);
+  letter-spacing: 0.1px;
   display: flex;
   justify-content: center;
   margin-top: 1.4rem;
