@@ -8,14 +8,14 @@ function Highlights({ data }) {
     return (
         <section className="highlights-section">
             <article className="city-time">
-                <div className="container">
+                <div className="city-name-container">
                     <MdLocationOn className="city-icon icon" />
                     <h2>{cityName}</h2>
                 </div>
                 <h4>At {day}., {month}, {hours}</h4>
             </article>
             <article className="temperature">
-                <div className="container temp-container">
+                <div className="city-name-container temp-container">
                     <img src={`http://openweathermap.org/img/w/${icon}.png`} alt="climate-icon" />
                     <h1>{Math.floor(temp)} &#8451;</h1>
                 </div>

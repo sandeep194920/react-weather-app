@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import Highlights from './HighlightsSection';
 import Hourly from './HourlySection';
 import axios from 'axios';
+import { divideOnDatesUtility, getMaxTempUtility, getMinTempUtility } from '../utilities/utilitiesFunctions';
+import Daily from './DailySection';
 
 function Weather() {
     const [city, setCity] = useState('')
@@ -9,7 +11,7 @@ function Weather() {
     const [data, setData] = useState();
 
     const api = {
-        url: 'https://api.openweathermap.org/data/2.5/forecast?q=halifax,us&cnt=7&units=metric&appid=',
+        url: 'https://api.openweathermap.org/data/2.5/forecast?q=halifax,us&units=metric&appid=',
         key: process.env.REACT_APP_API_KEY
     }
     const getData = async () => {
@@ -20,9 +22,20 @@ function Weather() {
             console.log(error)
         }
     }
+    // get all data
     useEffect(() => {
         getData()
     }, [])
+
+    //data for 7 days
+    useEffect(() => {
+        if (!data) return
+        const dividedData = divideOnDatesUtility(data.list)
+        const min = getMinTempUtility(dividedData[1])
+        const max = getMaxTempUtility(dividedData[1])
+        console.log(min)
+        console.log(max)
+    }, [data])
 
     return (
         // <main className="dark"> // can be enabled for dark mode in future
@@ -34,8 +47,11 @@ function Weather() {
                 </nav>
             </header >
             <main>
-                {data && <Highlights data={data} />}
-                {data && <Hourly data={data} />}
+                {data && <>
+                    <Highlights data={data} />
+                    <Hourly data={data} />
+                    <Daily />
+                </>}
             </main>
         </div >
     )
@@ -43,6 +59,4 @@ function Weather() {
 
 export default Weather
 
-
-//
-// list ->  dt_txt, weather[0] -> main, icon, 
+// max temp, min temp

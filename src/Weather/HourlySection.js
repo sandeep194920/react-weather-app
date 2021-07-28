@@ -6,7 +6,9 @@ function Hourly({ data }) {
         <section className="hourly-section">
             <h2 className="heading">Hourly</h2>
             <div className="hourly-container">
-                {data.list.map(eachHour => {
+
+                {/* getting 7 timeframes of data for hourly climate representation */}
+                {data.list.slice(0, 7).map(eachHour => {
                     const { day, hours } = timestampUtility(eachHour.dt)
                     const { dt_txt: uniqueVal, main: { temp }, weather: [{ main: climate, icon }] } = eachHour
                     return (
