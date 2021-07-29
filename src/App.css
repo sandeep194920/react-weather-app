@@ -76,7 +76,7 @@ main {
 .highlights-section {
   width: 30%;
   text-align: center;
-  margin: 3rem auto 0.5rem auto;
+  margin: 2.3rem auto 0.5rem auto;
 }
 article {
   letter-spacing: 0.7px;
@@ -107,6 +107,14 @@ article.temperature h5 {
   width: fit-content;
   padding: 0.4rem;
   margin: 0 auto 1rem auto;
+}
+
+.error {
+  color: var(--color-icon);
+  text-align: center;
+  margin-top: 0rem;
+  letter-spacing: 0.6px;
+  font-style: italic;
 }
 
 /* icons */
@@ -141,7 +149,7 @@ article.temperature h5 {
   position: absolute;
   font-size: 1.7rem;
   right: 2rem;
-  top: 0.5rem;
+  top: 0.6rem;
   cursor: pointer;
 }
 

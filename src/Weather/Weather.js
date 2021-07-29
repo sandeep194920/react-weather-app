@@ -5,17 +5,17 @@ import axios from 'axios';
 import Daily from './DailySection';
 import { divideOnDatesUtility, getMaxTempUtility } from '../utilities/utilitiesFunctions';
 import { BsToggleOff, BsToggleOn } from 'react-icons/bs';
-import { FaSearchLocation } from "react-icons/fa";
 import { FcSearch } from "react-icons/fc";
 
 function Weather() {
-    const [city, setCity] = useState('')
+    const [city, setCity] = useState('toronto')
     const [darkTheme, setDarkTheme] = useState(false)
     const [data, setData] = useState();
+    const [error, setError] = useState(false)
     // activeDay is the currently selected Day for which all the hours are displayed
     const [activeDay, setActiveDay] = useState(null)
     const api = {
-        url: 'https://api.openweathermap.org/data/2.5/forecast?q=halifax,us&units=metric&appid=',
+        url: `https://api.openweathermap.org/data/2.5/forecast?q=${city},us&units=metric&appid=`,
         key: process.env.REACT_APP_API_KEY
     }
 
@@ -23,9 +23,11 @@ function Weather() {
     const getData = async () => {
         try {
             const data = await axios(`${api.url}${api.key}`)
+            console.log(data)
             setData(data.data)
         } catch (error) {
             console.log(error)
+            setError(true)
         }
     }
     useEffect(() => {
@@ -44,14 +46,31 @@ function Weather() {
         setActiveDate()
     }, [])
 
+    //search city
+    const searchCityHandler = () => {
+        getData()
+        setCity('')
+    }
+
+    // if error, show error for 3 seconds
+    useEffect(() => {
+        if (!error) return
+        const timerId = setTimeout(() => {
+            setError(false)
+        }, 3000)
+        return () => {
+            clearTimeout(timerId)
+        }
+    }, [error])
+
     return (
         // <main className="dark"> // can be enabled for dark mode in future
         <div className={`content ${darkTheme && 'dark'}`} >
             < header >
                 <nav>
                     <div className="search-container">
-                        <input type="text" onChange={(e) => setCity(e.target.value)} value={city} placeholder='Search City' />
-                        <FcSearch className=" search-icon" />
+                        <input type="text" onKeyDown={e => { e.key === "Enter" && searchCityHandler() }} onChange={(e) => setCity(e.target.value)} value={city} placeholder='Search City' />
+                        <FcSearch onClick={searchCityHandler} className=" search-icon" />
                     </div>
                     {
                         darkTheme ?
@@ -60,16 +79,19 @@ function Weather() {
                             <BsToggleOn onClick={() => setDarkTheme(prev => !prev)} className="icon light-icon" />
                     }
                 </nav>
-            </header >
+            </header>
             <main>
-                {data && <>
-                    <Highlights data={data} />
-                    {activeDay && <Hourly data={data.list} activeDay={activeDay} />}
-                    <Daily data={data.list}
-                        activeDay={activeDay}
-                        setActiveDay={setActiveDay}
-                        setActiveDate={setActiveDate} />
-                </>}
+                <>
+                    {error ? <h3 className="error">City not found <span>😢❤️‍🩹</span> Please try another city <span>🙏🏻</span> </h3> : null}
+                    {data && <>
+                        <Highlights data={data} />
+                        {activeDay && <Hourly data={data.list} activeDay={activeDay} />}
+                        <Daily data={data.list}
+                            activeDay={activeDay}
+                            setActiveDay={setActiveDay}
+                            setActiveDate={setActiveDate} />
+                    </>}
+                </>
             </main>
         </div >
     )
