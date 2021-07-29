@@ -1,28 +1,39 @@
-import React, { useEffect } from 'react'
-import { convertDateUtility } from '../utilities/utilitiesFunctions'
+import React, { useState, useEffect } from 'react'
+import { capitalizeUtility, convertDateUtility, getHourlyDataUtility } from '../utilities/utilitiesFunctions'
 
 function Hourly({ data, activeDay }) {
+    const [hourlyData, setHourlyData] = useState(null)
+    const [displayDate, setDisplayDate] = useState({})
+
     useEffect(() => {
-    }, [])
+        const hourlyData = getHourlyDataUtility(data, activeDay)
+        setHourlyData(hourlyData)
+
+        // setting display heading
+        const { day, month, dayNumber: date } = convertDateUtility(hourlyData[0].dt_txt)
+        setDisplayDate({ ...displayDate, day, month, date })
+    }, [activeDay])
+
     return (
         <section className="hourly-section">
-            <h2 className="heading">Hourly</h2>
+            {displayDate && <h2 className="heading">{`${displayDate.day}, 
+                                    ${displayDate.month} ${displayDate.date}`}</h2>}
             <div className="hourly-container">
 
-                {/* getting 7 timeframes of data for hourly climate representation */}
-                {data.list.slice(0, 7).map(eachHour => {
-                    const { dayOfWeek: day, hours12Format: hours } = convertDateUtility(eachHour.dt_txt)
-                    const { dt_txt: uniqueVal, main: { temp }, weather: [{ main: climate, icon }] } = eachHour
+                {hourlyData && hourlyData.map(eachHour => {
+                    const { dayName: day, hours12Format: hours } = convertDateUtility(eachHour.dt_txt)
+                    const { dt_txt: uniqueVal, main: { temp }, weather: [{ icon, description: desc }] } = eachHour
                     return (
                         <div key={uniqueVal} className="hour">
                             <h4 className="hour-day">{day}</h4>
                             <h4 className="hour-time">{hours}</h4>
                             <img src={`http://openweathermap.org/img/w/${icon}.png`} alt="climate-icon" />
                             <h3 className="hour-temp">{Math.floor(temp)} &#8451;</h3>
-                            <h5>{climate}</h5>
+                            <h5>{capitalizeUtility(desc)}</h5>
                         </div>
                     )
                 })}
+
             </div>
         </section>
     )

@@ -46,14 +46,17 @@ body {
 .dark {
   background-image: linear-gradient(180deg, var(--color-dark), grey);
 }
-nav {
+nav,
+.search-container {
   display: flex;
   justify-content: center;
   position: relative;
 }
-
-nav input {
+.search-container {
   width: 50%;
+}
+.search-container input {
+  width: 100%;
   height: 3rem;
   border-radius: 0rem 0rem 2rem 2rem;
   outline: none;
@@ -131,7 +134,15 @@ article.temperature h5 {
 
 .arrow-icon {
   margin-top: -1rem;
-  font-size: 1.4rem;
+  font-size: 2rem;
+}
+
+.search-icon {
+  position: absolute;
+  font-size: 1.7rem;
+  right: 2rem;
+  top: 0.5rem;
+  cursor: pointer;
 }
 
 /* Hourly and Daily section */
@@ -141,15 +152,20 @@ article.temperature h5 {
   margin: 0 auto 1rem auto;
 }
 
-@media screen and (min-width: 1400px) {
+@media screen and (min-width: 1300px) {
   .hourly-section,
   .daily-section {
-    width: 50%;
+    min-width: 60%;
+    max-width: 60%;
   }
 }
 
 .heading {
-  letter-spacing: 1.2px;
+  letter-spacing: 0.7px;
+  font-size: 1.3rem;
+  background-color: var(--color-bg-light);
+  padding: 0.3rem;
+  width: fit-content;
 }
 
 .hourly-container,
@@ -169,7 +185,6 @@ article.temperature h5 {
 
 .daily-container .day {
   cursor: pointer;
-  /* background-color: black; */
 }
 
 .hour h5 {
@@ -224,7 +239,6 @@ article.temperature h5 {
 }
 
 .max-min-container {
-  height: 7.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;

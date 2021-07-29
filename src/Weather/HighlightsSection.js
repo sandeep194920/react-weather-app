@@ -6,7 +6,7 @@ function Highlights({ data }) {
     const { city: { name: cityName },
         list: [{ main: { temp, feels_like, temp_min, temp_max },
             weather: [{ description, icon }], dt_txt }] } = data
-    const { dayName: day, month, hours12Format: hours } = convertDateUtility(dt_txt)
+    const { dayName: day, month, hours12Format: hours, dayNumber: date } = convertDateUtility(dt_txt)
     return (
         <section className="highlights-section">
             <article className="city-time">
@@ -14,7 +14,7 @@ function Highlights({ data }) {
                     <MdLocationOn className="city-icon icon" />
                     <h2>{cityName}</h2>
                 </div>
-                <h4>At {day}., {month}, {hours}</h4>
+                <h4>At {day}., {month} {date}, {hours}</h4>
             </article>
             <article className="temperature">
                 <div className="city-name-container temp-container">

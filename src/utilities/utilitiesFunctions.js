@@ -1,18 +1,19 @@
 //converts date into a day
 const convertDateUtility = (date) => {
-    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const dayNumber = date.toString().slice(8, 10)
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const dayNum = new Date(date).getDay()
     let dayOfWeek = days[dayNum]
-    const dayName = dayOfWeek
+    const day = dayOfWeek
+    const dayName = dayOfWeek.slice(0, 3)
     const month = new Date(date).toString().slice(4, 7)
     const hours24Format = new Date(date).getHours()
     const hours12Format = `${hours24Format % 12 === 0 ? 12 : hours24Format % 12}
-                          ${hours24Format > 12 ? 'a.m' : 'p.m'}`
+                          ${hours24Format >= 12 ? 'p.m' : 'a.m'}`
 
     const today = new Date().toString().slice(0, 3)
-    console.log(`The month is ${new Date(date)}`);
-    dayOfWeek = dayOfWeek === today ? dayOfWeek = 'Today' : dayOfWeek
-    return { dayOfWeek, month, hours12Format, dayName }
+    dayOfWeek = dayName === today ? dayOfWeek = 'Today' : dayOfWeek
+    return { dayOfWeek, month, hours12Format, dayName, day, dayNumber }
 }
 
 // converts to upper case of first letter for each word in the string
@@ -66,10 +67,35 @@ const getMaxTempUtility = (data) => {
     return maxTemp
 }
 
+const getHourlyDataUtility = (data, activeDay) => {
+    const activeDateStr = activeDay.toString().slice(0, 10)
+    // we should have minimum 5 entries for Hourly Data, so we can take remaining data from next day
+    let hourlyData = data.filter(hour => hour.dt_txt.includes(activeDateStr) && hour)
+    let today = new Date();
+    let tomorrow = new Date();
+    tomorrow.setDate(today.getDate() + 1);
+    let tomorrowDateStr = tomorrow.toISOString().slice(0, 10)
+    let count = hourlyData.length
+
+    // let tomorrowData = data.filter(hour => hour.dt_txt.includes(tomorrowDateStr) && hour)
+    if (count < 7) {
+        let tomorrowData = data.filter(hour => {
+            count++
+            return (
+                (hour.dt_txt.includes(tomorrowDateStr) && count <= 7) && hour
+            )
+        })
+        return [...hourlyData, ...tomorrowData]
+    }
+    return hourlyData
+}
+
+
 export {
     capitalizeUtility,
     divideOnDatesUtility,
     getMaxTempUtility,
     getMinTempUtility,
-    convertDateUtility
+    convertDateUtility,
+    getHourlyDataUtility
 }
