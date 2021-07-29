@@ -1,7 +1,9 @@
-import React from 'react'
-import { timestampUtility } from '../utilities/utilitiesFunctions'
+import React, { useEffect } from 'react'
+import { convertDateUtility } from '../utilities/utilitiesFunctions'
 
-function Hourly({ data }) {
+function Hourly({ data, activeDay }) {
+    useEffect(() => {
+    }, [])
     return (
         <section className="hourly-section">
             <h2 className="heading">Hourly</h2>
@@ -9,7 +11,7 @@ function Hourly({ data }) {
 
                 {/* getting 7 timeframes of data for hourly climate representation */}
                 {data.list.slice(0, 7).map(eachHour => {
-                    const { day, hours } = timestampUtility(eachHour.dt)
+                    const { dayOfWeek: day, hours12Format: hours } = convertDateUtility(eachHour.dt_txt)
                     const { dt_txt: uniqueVal, main: { temp }, weather: [{ main: climate, icon }] } = eachHour
                     return (
                         <div key={uniqueVal} className="hour">

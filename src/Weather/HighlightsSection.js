@@ -1,10 +1,12 @@
 import React from 'react'
 import { MdLocationOn } from "react-icons/md";
-import { capitalizeUtility, timestampUtility } from '../utilities/utilitiesFunctions';
+import { capitalizeUtility, convertDateUtility } from '../utilities/utilitiesFunctions';
 
 function Highlights({ data }) {
-    const { city: { name: cityName }, list: [{ main: { temp, feels_like, temp_min, temp_max }, weather: [{ description, icon }], dt }], } = data
-    const { day, hours, month } = timestampUtility(dt)
+    const { city: { name: cityName },
+        list: [{ main: { temp, feels_like, temp_min, temp_max },
+            weather: [{ description, icon }], dt_txt }] } = data
+    const { dayName: day, month, hours12Format: hours } = convertDateUtility(dt_txt)
     return (
         <section className="highlights-section">
             <article className="city-time">

@@ -1,7 +1,20 @@
-import React from 'react'
-import { divideOnDatesUtility, getMaxTempUtility, getMinTempUtility, timestampUtility } from '../utilities/utilitiesFunctions';
+import React, { useState, useEffect } from 'react'
+import { divideOnDatesUtility, getMaxTempUtility, convertDateUtility, getMinTempUtility } from '../utilities/utilitiesFunctions';
+import { IoIosArrowDown } from "react-icons/io";
 
-function Daily({ data }) {
+function Daily({ data, activeDay, setActiveDay }) {
+    // const [activeDay, setActiveDay] = useState(0)
+
+    const testFun = (val) => {
+        console.log(`The val is ${val}`)
+        setActiveDay(val)
+    }
+    //setting initial active selected day automatically to first day
+    useEffect(() => {
+        const dayArray = divideOnDatesUtility(data)
+        const { dt } = getMaxTempUtility(dayArray[0])
+        setActiveDay(dt)
+    }, [])
 
     return (
         <section className="daily-section">
@@ -9,28 +22,30 @@ function Daily({ data }) {
             <div className="daily-container">
 
                 {divideOnDatesUtility(data).map(eachDay => {
-                    // eachDay gives array of same day with 8 different times
-
-                    //get min and max objects
                     const min = getMinTempUtility(eachDay)
                     const max = getMaxTempUtility(eachDay)
-                    const { dt_txt: uniqueVal, main: { temp_max: maxTemp }, weather: [{ icon: iconMax }] } = max
+                    const { dt, dt_txt: uniqueVal, main: { temp_max: maxTemp }, weather: [{ icon: iconMax }] } = max
                     const { main: { temp_min: minTemp }, weather: [{ icon: iconMin }] } = min
-                    const { day } = timestampUtility([eachDay[0].dt]) // taking the first time available here to get day
+                    const { dayOfWeek } = convertDateUtility(uniqueVal)
+
+                    // difference is used for graphically representing the min and max temperatures
+                    const difference = ((maxTemp - minTemp) / 5).toFixed(2)
                     return (
-                        <div key={uniqueVal} className="day">
-                            <h4 className="hour-day">{day}</h4>
-                            {/* <h4 className="hour-time">8 a.m.</h4> */}
+                        <div onClick={() => testFun(dt)} key={uniqueVal} className="day">
+                            {activeDay === dt && <IoIosArrowDown className="icon arrow-icon" />}
+                            <h4 className="hour-day">{dayOfWeek}</h4>
+                            {/* <h4 className="hour-day">{date.toString()}</h4> */}
+                            {/* <h4 className="hour-day">{eachDay[0].dt.toString()}</h4> */}
                             <div className="day-img-container">
                                 <img className="daily-img daily-img-1" src={`http://openweathermap.org/img/w/${iconMax}.png`} alt="climate-icon" />
                                 <div className="img-dash"></div>
                                 <img className="daily-img daily-img-2" src={`http://openweathermap.org/img/w/${iconMin}.png`} alt="climate-icon" />
                             </div>
-                            {/* <h3 className="hour-temp">23 &#8451;</h3> */}
                             <div className="max-min-container">
-                                <h5>{maxTemp} &#8451;</h5>
-                                <div className="temp-dash"></div>
-                                <h5>{minTemp} &#8451;</h5>
+                                <h5>{Math.floor(maxTemp)} &#8451;</h5>
+                                {/* height is set dynamically, hence using inline styling */}
+                                <div style={{ height: `${difference}rem` }} className="temp-dash"></div>
+                                <h5>{Math.floor(minTemp)} &#8451;</h5>
                             </div>
                         </div>
                     )

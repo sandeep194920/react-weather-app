@@ -1,19 +1,20 @@
-// converts timestamp into date and time 
-const timestampUtility = (timestamp) => {
-    const unix_timestamp = timestamp
-    const date = new Date(unix_timestamp * 1000);
-    const hours24Format = date.getHours();
-    const minutes = "0" + date.getMinutes();
-    const day = date.toString().slice(0, 3)
-    const month = date.toString().slice(4, 10)
-    let hours = `${hours24Format % 12} a.m`;
-    if (hours24Format > 12) {
-        hours = `${hours24Format % 12} p.m`
-    }
-    return {
-        day, hours, month, minutes
-    }
+//converts date into a day
+const convertDateUtility = (date) => {
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const dayNum = new Date(date).getDay()
+    let dayOfWeek = days[dayNum]
+    const dayName = dayOfWeek
+    const month = new Date(date).toString().slice(4, 7)
+    const hours24Format = new Date(date).getHours()
+    const hours12Format = `${hours24Format % 12 === 0 ? 12 : hours24Format % 12}
+                          ${hours24Format > 12 ? 'a.m' : 'p.m'}`
+
+    const today = new Date().toString().slice(0, 3)
+    console.log(`The month is ${new Date(date)}`);
+    dayOfWeek = dayOfWeek === today ? dayOfWeek = 'Today' : dayOfWeek
+    return { dayOfWeek, month, hours12Format, dayName }
 }
+
 // converts to upper case of first letter for each word in the string
 const capitalizeUtility = (str) => {
     let strArray = str.toLowerCase().split(' ')
@@ -66,9 +67,9 @@ const getMaxTempUtility = (data) => {
 }
 
 export {
-    timestampUtility,
     capitalizeUtility,
     divideOnDatesUtility,
     getMaxTempUtility,
-    getMinTempUtility
+    getMinTempUtility,
+    convertDateUtility
 }

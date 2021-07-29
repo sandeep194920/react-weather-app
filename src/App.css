@@ -49,7 +49,9 @@ body {
 nav {
   display: flex;
   justify-content: center;
+  position: relative;
 }
+
 nav input {
   width: 50%;
   height: 3rem;
@@ -117,6 +119,21 @@ article.temperature h5 {
   font-size: 2rem;
 }
 
+.light-icon {
+  font-size: 2rem;
+  color: white;
+  justify-self: left;
+  position: absolute;
+  right: 6rem;
+  top: 0.2rem;
+  cursor: pointer;
+}
+
+.arrow-icon {
+  margin-top: -1rem;
+  font-size: 1.4rem;
+}
+
 /* Hourly and Daily section */
 .hourly-section,
 .daily-section {
@@ -148,6 +165,11 @@ article.temperature h5 {
 .daily-container .day {
   margin: 2rem;
   text-align: center;
+}
+
+.daily-container .day {
+  cursor: pointer;
+  /* background-color: black; */
 }
 
 .hour h5 {
@@ -191,7 +213,7 @@ article.temperature h5 {
 }
 
 .temp-dash {
-  height: 3rem;
+  height: 3.5rem;
   width: 3px;
   margin: 0.5rem auto;
   border-radius: 100%;
