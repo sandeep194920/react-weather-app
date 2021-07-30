@@ -16,28 +16,44 @@
   --color-bg-light2: rgba(141, 137, 137, 0.24);
 }
 
-* {
+::-webkit-scrollbar {
+  height: 0.2rem;
+  width: 0.2rem;
+}
+::-webkit-scrollbar-button {
+  background: #ccc;
+}
+::-webkit-scrollbar-track-piece {
+  background: #888;
+}
+::-webkit-scrollbar-thumb {
+  background: #eee;
+}
+
+​ * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+body,
+.dark {
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
 
 body {
   font-family: 'Roboto', sans-serif;
-
   background-image: linear-gradient(
     165deg,
     var(--color-background),
     var(--color-light)
   );
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  margin: 0;
+  padding: 0;
 }
 
 .dark {
   background-image: linear-gradient(180deg, var(--color-dark), grey);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
 }
 
 /* header */
@@ -77,11 +93,8 @@ article {
   letter-spacing: 0.7px;
 }
 
-article.city-time {
-  margin-bottom: 1.5rem;
-}
-
 article.temperature h1 {
+  margin: 0;
   font-size: 2.5rem;
   padding: 1rem;
 }
@@ -94,13 +107,16 @@ article.temperature h5 {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 1rem 0;
+}
+
+.city-name-container h2 {
+  margin: 0;
 }
 
 .temp-container {
   background-color: var(--color-bg-light2);
   width: fit-content;
-  padding: 0.4rem;
+  padding: 0 0.4rem;
   margin: 0 auto 1rem auto;
 }
 
@@ -125,14 +141,22 @@ article.temperature h5 {
   font-size: 2rem;
 }
 
-.light-icon {
+.light-icon,
+.git-icon {
   font-size: 2rem;
   color: white;
   justify-self: left;
   position: absolute;
-  right: 6rem;
   top: 0.2rem;
   cursor: pointer;
+}
+
+.light-icon {
+  right: 6rem;
+}
+
+.git-icon {
+  left: 6rem;
 }
 
 .temperature-toggle-icon {
@@ -293,6 +317,7 @@ article.temperature h5 {
     margin-top: 0.5rem;
     min-width: 100%;
     overflow-x: scroll;
+    /* scrollbar-width: none; */
     justify-content: space-around;
   }
   .hourly-container .hour,

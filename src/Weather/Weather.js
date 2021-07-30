@@ -6,6 +6,7 @@ import Daily from './DailySection';
 import { divideOnDatesUtility, getMaxTempUtility } from '../utilities/utilitiesFunctions';
 import { BsToggleOff, BsToggleOn } from 'react-icons/bs';
 import { FcSearch } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
 
 function Weather() {
     const [search, setSearch] = useState('')
@@ -76,14 +77,14 @@ function Weather() {
         if (!error) return
         const timerId = setTimeout(() => {
             setError(false)
-        }, 2000)
+        }, 3000)
         return () => {
             clearTimeout(timerId)
         }
     }, [error])
 
 
-    // preserving theme
+    // for preserving theme after page refresh
     const themeHandler = async () => {
         const currentTheme = localStorage.getItem('darkTheme')
         await localStorage.setItem('darkTheme', `${currentTheme === 'true' ? 'false' : 'true'}`)
@@ -91,7 +92,6 @@ function Weather() {
     }
 
     useEffect(() => {
-        console.log(darkTheme, " is dark")
         if (darkTheme === "true") {
             document.body.classList.add('dark');
         } else {
@@ -100,10 +100,12 @@ function Weather() {
     }, [darkTheme])
 
     return (
-        // <div className={`content ${darkTheme === "true" && 'dark'}`} >
         <div>
             < header >
                 <nav>
+                    <a href="https://github.com/sandeep194920/react-weather-app">
+                        <FaGithub className="icon git-icon" />
+                    </a>
                     <div className="search-container">
                         <input type="text" onKeyDown={e => { e.key === "Enter" && searchCityHandler() }} onChange={(e) => setSearch(e.target.value)} value={search} placeholder='Search City' />
                         <FcSearch onClick={searchCityHandler} className=" search-icon" />
