@@ -11,7 +11,7 @@ function Hourly({ data, activeDay, celsius, temperatureIcon }) {
         // setting display heading
         const { day, month, dayNumber: date } = convertDateUtility(hourlyData[0].dt_txt)
         setDisplayDate({ ...displayDate, day, month, date })
-    }, [activeDay, data])
+    }, [activeDay, data, hourlyData, displayDate])
 
     return (
         <section className="hourly-section">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import Highlights from './HighlightsSection';
 import Hourly from './HourlySection';
 import axios from 'axios';
@@ -31,7 +31,7 @@ function Weather() {
     if (!celsius) temperatureIcon = <span>&#8457;</span>
 
     // get all data
-    const getData = async () => {
+    const getData = useCallback(async () => {
         try {
             const data = await axios(`${api.url}${api.key}`)
             setData(data.data)
@@ -42,18 +42,18 @@ function Weather() {
             setError(true)
             setCity(prevSearch)
         }
-    }
+    }, [prevSearch, api.key, api.url, city])
 
     useEffect(() => {
         getData()
-    }, [celsius, city])
+    }, [celsius, city, getData])
 
     //setting initial active selected day automatically to first day
-    const setActiveDate = () => {
+    const setActiveDate = useCallback(() => {
         const dayArray = divideOnDatesUtility(data.list)
         const { dt_txt } = getMaxTempUtility(dayArray[0])
         setActiveDay(dt_txt)
-    }
+    }, [data])
 
     useEffect(() => {
         if (!data) return
@@ -63,7 +63,7 @@ function Weather() {
         if (!activeDay) {
             setActiveDate()
         }
-    }, [data])
+    }, [data, activeDay, setActiveDate])
 
     //search city
     const searchCityHandler = () => {

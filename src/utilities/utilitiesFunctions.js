@@ -30,7 +30,7 @@ const divideOnDatesUtility = (data) => {
     // dividing all data into 7 days 
     let dailyData = []
     let currentDate = ''
-    dailyDataList.map((eachHour) => {
+    dailyDataList.forEach((eachHour) => {
         // const eachday = eachHour['dt_txt'].slice(0, 10)
         // const eachday = eachHour[dt_txt]
         if (currentDate !== eachHour['dt_txt'].slice(0, 10)) {

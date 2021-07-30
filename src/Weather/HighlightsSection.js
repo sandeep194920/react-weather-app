@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { MdLocationOn } from "react-icons/md";
 import { capitalizeUtility, convertDateUtility } from '../utilities/utilitiesFunctions';
 import { BsToggleOff, BsToggleOn } from 'react-icons/bs';

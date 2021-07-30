@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { divideOnDatesUtility, getMaxTempUtility, convertDateUtility, getMinTempUtility } from '../utilities/utilitiesFunctions';
-import { IoIosArrowDown, IoMdArrowDropdown } from "react-icons/io";
+import { IoMdArrowDropdown } from "react-icons/io";
 
 function Daily({ data, activeDay, setActiveDay, setActiveDate, celsius, temperatureIcon }) {
 
