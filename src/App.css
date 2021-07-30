@@ -344,4 +344,23 @@ article.temperature h5 {
   .daily-container .day:first-child {
     margin-left: 20rem;
   }
+
+  .search-container {
+    width: 70%;
+  }
+  .git-icon,
+  .light-icon {
+    font-size: 1.7rem;
+  }
+
+  .git-icon {
+    left: 0.7rem;
+  }
+  .light-icon {
+    right: 0.7rem;
+  }
+  .search-icon {
+    font-size: 1.4rem;
+    top: 0.8rem;
+  }
 }
