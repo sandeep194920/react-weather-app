@@ -14,7 +14,6 @@
   --color-focus: rgb(237, 240, 237);
   --color-bg-light: rgba(141, 137, 137, 0.151);
   --color-bg-light2: rgba(141, 137, 137, 0.24);
-  /* --color-bg-light3: rgba(141, 137, 137, 0.178); */
 }
 
 * {
@@ -137,6 +136,12 @@ article.temperature h5 {
   position: absolute;
   right: 6rem;
   top: 0.2rem;
+  cursor: pointer;
+}
+
+.temperature-toggle-icon {
+  margin-top: 1rem;
+  font-size: 1.6rem;
   cursor: pointer;
 }
 
