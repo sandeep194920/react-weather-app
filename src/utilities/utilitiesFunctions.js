@@ -5,14 +5,14 @@ const convertDateUtility = (date) => {
     const dayNum = new Date(date).getDay()
     let dayOfWeek = days[dayNum]
     const day = dayOfWeek
-    const dayName = dayOfWeek.slice(0, 3)
+    let dayName = dayOfWeek.slice(0, 3)
     const month = new Date(date).toString().slice(4, 7)
     const hours24Format = new Date(date).getHours()
     const hours12Format = `${hours24Format % 12 === 0 ? 12 : hours24Format % 12}
                           ${hours24Format >= 12 ? 'p.m' : 'a.m'}`
 
     const today = new Date().toString().slice(0, 3)
-    dayOfWeek = dayName === today ? dayOfWeek = 'Today' : dayOfWeek
+    dayOfWeek = dayName === today ? dayName = 'Today' : dayOfWeek
     return { dayOfWeek, month, hours12Format, dayName, day, dayNumber }
 }
 
@@ -78,11 +78,11 @@ const getHourlyDataUtility = (data, activeDay) => {
     let count = hourlyData.length
 
     // let tomorrowData = data.filter(hour => hour.dt_txt.includes(tomorrowDateStr) && hour)
-    if (count < 7) {
+    if (count < 8) {
         let tomorrowData = data.filter(hour => {
             count++
             return (
-                (hour.dt_txt.includes(tomorrowDateStr) && count <= 7) && hour
+                (hour.dt_txt.includes(tomorrowDateStr) && count <= 8) && hour
             )
         })
         return [...hourlyData, ...tomorrowData]

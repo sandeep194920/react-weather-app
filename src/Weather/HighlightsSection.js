@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { MdLocationOn } from "react-icons/md";
-import { IoToggleOutline } from 'react-icons/io5';
 import { capitalizeUtility, convertDateUtility } from '../utilities/utilitiesFunctions';
 import { BsToggleOff, BsToggleOn } from 'react-icons/bs';
 
@@ -9,7 +8,7 @@ function Highlights({ data, celsius, setCelsius }) {
     const { city: { name: cityName },
         list: [{ main: { temp, feels_like, temp_min, temp_max },
             weather: [{ description, icon }], dt_txt }] } = data
-    const { dayName: day, month, hours12Format: hours, dayNumber: date } = convertDateUtility(dt_txt)
+    const { day, month, hours12Format: hours, dayNumber: date } = convertDateUtility(dt_txt)
 
     // let temperatureIcon
     let temperatureIcon = <span>&#8451;</span>

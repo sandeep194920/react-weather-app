@@ -17,7 +17,10 @@ function Weather() {
     const [error, setError] = useState(false)
     // activeDay is the currently selected Day for which all the hours are displayed
     const [activeDay, setActiveDay] = useState(null)
-    const [celsius, setCelsius] = useState(true) // if false it will be fahrenheit
+    // if false it will be fahrenheit
+    const [celsius, setCelsius] = useState(true)
+    // if error occurs then the search will be set to previous search to avoid error display each time when units are converted. 
+    const [prevSearch, setPrevSearch] = useState('')
     const api = {
         url: `https://api.openweathermap.org/data/2.5/forecast?q=${city},us&units=${celsius ? 'metric' : 'imperial'}&appid=`,
         key: process.env.REACT_APP_API_KEY
@@ -31,19 +34,18 @@ function Weather() {
         try {
             const data = await axios(`${api.url}${api.key}`)
             setData(data.data)
-            setError(false)
+            setPrevSearch(city)
         } catch (error) {
             console.log(error)
+            setSearch('')
             setError(true)
+            setCity(prevSearch)
         }
-        // setError(false)
     }
+
     useEffect(() => {
-        console.log(`CA`)
-        console.log(error)
         getData()
     }, [celsius, city])
-
 
     //setting initial active selected day automatically to first day
     const setActiveDate = () => {
@@ -64,10 +66,9 @@ function Weather() {
 
     //search city
     const searchCityHandler = () => {
-        getData()
         setCity(search)
         setSearch('')
-        setError(false)
+        getData()
     }
 
     // if error, show error for 3 seconds
@@ -81,6 +82,7 @@ function Weather() {
         }
     }, [error])
 
+
     // preserving theme
     const themeHandler = async () => {
         const currentTheme = localStorage.getItem('darkTheme')
@@ -88,8 +90,18 @@ function Weather() {
         setDarkTheme(localStorage.getItem('darkTheme'))
     }
 
+    useEffect(() => {
+        console.log(darkTheme, " is dark")
+        if (darkTheme === "true") {
+            document.body.classList.add('dark');
+        } else {
+            document.body.classList.remove('dark');
+        }
+    }, [darkTheme])
+
     return (
-        <div className={`content ${darkTheme === "true" && 'dark'}`} >
+        // <div className={`content ${darkTheme === "true" && 'dark'}`} >
+        <div>
             < header >
                 <nav>
                     <div className="search-container">
@@ -105,6 +117,7 @@ function Weather() {
                 </nav>
             </header>
             <main>
+                {/* style={error && { display: 'none' }}  */}
                 <>
                     {error && <h3 className="error">City not found <span>😢❤️‍🩹</span> Please try another city <span>🙏🏻</span> </h3>}
                     {data && <>
